@@ -11,6 +11,7 @@ let currentItem;
 
 function renderMarkup(array) {
   const listMarkup = array.map( item => {
+    console.log(item.description);
     return `<li class="gallery__item">
     <a
       class="gallery__link"
@@ -36,6 +37,7 @@ refs.mainList.addEventListener('click', clickMainList);
 
 function clickMainList(e) {
   e.preventDefault();
+  if (e.target === e.currentTarget) { return }
   currentItem = e.target.closest('li');
   refs.modalBlock.classList.toggle('is-open'); // add
   if (e.target.dataset.source) {
