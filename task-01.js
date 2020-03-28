@@ -11,7 +11,6 @@ let currentItem;
 
 function renderMarkup(array) {
   const listMarkup = array.map( item => {
-    console.log(item.description);
     return `<li class="gallery__item">
     <a
       class="gallery__link"
@@ -56,12 +55,13 @@ function addEscListener() {
   window.addEventListener('keydown', pressEsc);   
 }
 
-function pressEsc({code}) { 
-  if (code === 'Escape') {
+function pressEsc(e) { 
+  e.preventDefault();
+  if (e.code === 'Escape') {
     closeModal();
-  }else if(code === 'ArrowLeft') {
+  }else if(e.code === 'ArrowLeft') {
     moveLeft();
-  }else if(code === 'ArrowRight') {
+  }else if(e.code === 'ArrowRight') {
     moveRight();
   }      
   return;
@@ -75,15 +75,11 @@ function closeModal() {
 }
 
 function moveRight() {
-  if (currentItem !== refs.mainList.lastChild) { 
-    currentItem = currentItem.nextSibling; 
-  }else { currentItem = refs.mainList.firstChild; }
+  currentItem = (currentItem !== refs.mainList.lastChild) ? currentItem.nextSibling : refs.mainList.firstChild;
   refs.lightboxImage.src = currentItem.firstElementChild.href;
 }
 
 function moveLeft() {
-  if (currentItem !== refs.mainList.firstChild) { 
-    currentItem = currentItem.previousSibling;
-  }else { currentItem = refs.mainList.lastChild; }
+  currentItem = (currentItem !== refs.mainList.firstChild) ? currentItem.previousSibling : refs.mainList.lastChild;
   refs.lightboxImage.src = currentItem.firstElementChild.href;
 }
